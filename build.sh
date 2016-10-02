@@ -4,12 +4,14 @@ ROOT_DIR=src/basicl/
 MAIN_DIR=${ROOT_DIR}/main/
 TESTS_FILES=test/resources/*
 
-if [ ! -d build ]; then
-	echo "[INFO] Creating build dir structure"
-	mkdir build/
-	mkdir build/test_output
-	mkdir build/bin
+if [ -d build ]; then
+	rm -r build/
 fi
+
+echo "[INFO] Creating build dir structure"
+mkdir build/
+mkdir build/test_output
+mkdir build/bin
 
 echo ---------compiling jjt Files---------
 jjtree -OUTPUT_DIRECTORY=${MAIN_DIR} ${MAIN_DIR}/BasicL.jjt

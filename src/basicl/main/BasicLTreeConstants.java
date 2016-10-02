@@ -13,19 +13,21 @@ public interface BasicLTreeConstants
   public int JJTTYPE = 7;
   public int JJTMAIN = 8;
   public int JJTASSIGN = 9;
-  public int JJTADD = 10;
-  public int JJTMULT = 11;
-  public int JJTADDOP = 12;
-  public int JJTMULTOP = 13;
-  public int JJTBOOLOPP = 14;
-  public int JJTCONDITION = 15;
-  public int JJTIDENT_LIST = 16;
-  public int JJTARG_LIST = 17;
-  public int JJTID = 18;
-  public int JJTNUM = 19;
-  public int JJTBOOL = 20;
-  public int JJTREAL = 21;
-  public int JJTFUNCTIONCALL = 22;
+  public int JJTIF = 10;
+  public int JJTWHILE = 11;
+  public int JJTADD = 12;
+  public int JJTMULT = 13;
+  public int JJTADDOP = 14;
+  public int JJTMULTOP = 15;
+  public int JJTBOOLOPP = 16;
+  public int JJTCONDITION = 17;
+  public int JJTIDENT_LIST = 18;
+  public int JJTARG_LIST = 19;
+  public int JJTID = 20;
+  public int JJTNUM = 21;
+  public int JJTBOOL = 22;
+  public int JJTREAL = 23;
+  public int JJTFUNCTIONCALL = 24;
 
 
   public String[] jjtNodeName = {
@@ -39,6 +41,8 @@ public interface BasicLTreeConstants
     "Type",
     "Main",
     "Assign",
+    "If",
+    "While",
     "Add",
     "Mult",
     "AddOp",
@@ -54,4 +58,4 @@ public interface BasicLTreeConstants
     "FunctionCall",
   };
 }
-/* JavaCC - OriginalChecksum=045410501dbb411254dc509b32272752 (do not edit this line) */
+/* JavaCC - OriginalChecksum=d7c5e0a727064f5b42d770d46073ff94 (do not edit this line) */

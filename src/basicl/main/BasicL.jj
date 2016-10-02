@@ -47,9 +47,9 @@ public class BasicL/*@bgen(jjtree)*/implements BasicLTreeConstants/*@egen*/
     System.out.println("Abstract Syntax Tree:");
 
     root.dump(" ");
-    System.out.println("\n\n------Symantic Analysis------\n");
-    STVisitor stv = new STVisitor();
-    root.jjtAccept(stv,null);
+    //System.out.println("\n\n------Symantic Analysis------\n");
+    //STVisitor stv = new STVisitor();
+    //root.jjtAccept(stv,null);
 	}
 }
 
@@ -100,18 +100,18 @@ TOKEN : /* Keywords */
 	|	<FALSE : "false">
 	|	<IF : "if">
 	|	<INT : "int">
-	| <DOUBLE: "double">
-	| <MAIN : "main">
+	| 	<DOUBLE: "double">
+	| 	<MAIN : "main">
 	|	<NOT : "not">
-	| <OR : "or">
+	| 	<OR : "or">
 	|	<RETURN : "return">
-	| <THEN : "then">
+	| 	<THEN : "then">
 	|	<TRUE : "true">
-	| <VAR : "var">
-	| <VOID : "void">
-	| <WHILE : "while">
+	| 	<VAR : "var">
+	| 	<VOID : "void">
+	| 	<WHILE : "while">
 	|	<BEGIN : "begin">
-	| <END : "end">
+	| 	<END : "end">
 }
 
  TOKEN : /* Identifiers */
@@ -134,11 +134,11 @@ TOKEN : /* Operators and Relations */
 	|	<MULT_SIGN : "*">
 	|	<DIV_SIGN : "/">
 	|	<EQUALS_SIGN : "=">
-	| <NOT_EQUALS_SIGN : "!=">
+	| 	<NOT_EQUALS_SIGN : "!=">
 	|	<LESS_THAN : "<">
-	| <GREATER_THAN : ">">
+	| 	<GREATER_THAN : ">">
 	|	<LESS_THAT_EQUALS : "<=">
-	| <GREATER_THAN_EQUALS : ">=">
+	| 	<GREATER_THAN_EQUALS : ">=">
 	|	<LEFT_BRACKET : "(">
 	|	<RIGHT_BRACKET : ")">
 	|	<COMMA : ",">
@@ -200,7 +200,7 @@ void Decl() : {}
 	(
 	 	Var_decl() 
 	) 
-	| (
+	| 	(
 			Const_decl()
 		)
 }
@@ -375,37 +375,37 @@ void Type()       : {/*@bgen(jjtree) Type */
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
 {/*@bgen(jjtree) Type */
-        try {
+                try {
 /*@egen*/
-	<INT>/*@bgen(jjtree)*/
-               {
-                 jjtree.closeNodeScope(jjtn000, true);
-                 jjtc000 = false;
-               }
-/*@egen*/  { jjtn000.value = token;} 
-	| <DOUBLE>/*@bgen(jjtree)*/
-                   {
-                     jjtree.closeNodeScope(jjtn000, true);
-                     jjtc000 = false;
-                   }
-/*@egen*/ { jjtn000.value = token;} 
-	| <BOOL>/*@bgen(jjtree)*/
-                 {
-                   jjtree.closeNodeScope(jjtn000, true);
-                   jjtc000 = false;
-                 }
-/*@egen*/ { jjtn000.value = token;} 
+		<INT>/*@bgen(jjtree)*/
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/  		{ jjtn000.value = token;} 
+	| 	<DOUBLE>/*@bgen(jjtree)*/
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/ 	{ jjtn000.value = token;} 
+	| 	<BOOL>/*@bgen(jjtree)*/
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/ 		{ jjtn000.value = token;} 
 	|	<VOID>/*@bgen(jjtree)*/
-                       {
-                         jjtree.closeNodeScope(jjtn000, true);
-                         jjtc000 = false;
-                       }
-/*@egen*/ { jjtn000.value = token;}/*@bgen(jjtree)*/
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/ 		{ jjtn000.value = token;}/*@bgen(jjtree)*/
+                } finally {
+                  if (jjtc000) {
+                    jjtree.closeNodeScope(jjtn000, true);
+                  }
+                }
 /*@egen*/ 
 }
 
@@ -477,12 +477,66 @@ void Statment() : {}
                 }
 /*@egen*/           	
 	|	<BEGIN> ( Statment() <SEMICOLON> )* <END>
-	|	(
+	|/*@bgen(jjtree) #If(> 0) */
+                {
+                  ASTIf jjtn002 = new ASTIf(JJTIF);
+                  boolean jjtc002 = true;
+                  jjtree.openNodeScope(jjtn002);
+                }
+                try {
+/*@egen*/	(
 			<IF> Condition() <THEN> Statment() <SEMICOLON> <ELSE> Statment()
-		)    
-	|	(
+		)/*@bgen(jjtree)*/
+                } catch (Throwable jjte002) {
+                  if (jjtc002) {
+                    jjtree.clearNodeScope(jjtn002);
+                    jjtc002 = false;
+                  } else {
+                    jjtree.popNode();
+                  }
+                  if (jjte002 instanceof RuntimeException) {
+                    throw (RuntimeException)jjte002;
+                  }
+                  if (jjte002 instanceof ParseException) {
+                    throw (ParseException)jjte002;
+                  }
+                  throw (Error)jjte002;
+                } finally {
+                  if (jjtc002) {
+                    jjtree.closeNodeScope(jjtn002, jjtree.nodeArity() > 0);
+                  }
+                }
+/*@egen*/          
+	|/*@bgen(jjtree) #While(> 0) */
+                {
+                  ASTWhile jjtn003 = new ASTWhile(JJTWHILE);
+                  boolean jjtc003 = true;
+                  jjtree.openNodeScope(jjtn003);
+                }
+                try {
+/*@egen*/	(
 			<WHILE> Condition() <DO> Statment()
-		) 	
+		)/*@bgen(jjtree)*/
+                } catch (Throwable jjte003) {
+                  if (jjtc003) {
+                    jjtree.clearNodeScope(jjtn003);
+                    jjtc003 = false;
+                  } else {
+                    jjtree.popNode();
+                  }
+                  if (jjte003 instanceof RuntimeException) {
+                    throw (RuntimeException)jjte003;
+                  }
+                  if (jjte003 instanceof ParseException) {
+                    throw (ParseException)jjte003;
+                  }
+                  throw (Error)jjte003;
+                } finally {
+                  if (jjtc003) {
+                    jjtree.closeNodeScope(jjtn003, jjtree.nodeArity() > 0);
+                  }
+                }
+/*@egen*/           	
 	| {} // this will allow you to just stick aload of semicolons in the file and will parse correctly !!!
 }
 
@@ -572,24 +626,24 @@ void AddOp()        : {/*@bgen(jjtree) AddOp */
                 try {
 /*@egen*/
 		<PLUS_SIGN>/*@bgen(jjtree)*/
-                            {
-                              jjtree.closeNodeScope(jjtn000, true);
-                              jjtc000 = false;
-                            }
-/*@egen*/ { jjtn000.value = token;} 
-	| <MINUS_SIGN>/*@bgen(jjtree)*/
-                       {
-                         jjtree.closeNodeScope(jjtn000, true);
-                         jjtc000 = false;
-                       }
-/*@egen*/ { jjtn000.value = token;}/*@bgen(jjtree)*/
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/ 	{ jjtn000.value = token;} 
+	| 	<MINUS_SIGN>/*@bgen(jjtree)*/
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/ 	{ jjtn000.value = token;}/*@bgen(jjtree)*/
                 } finally {
                   if (jjtc000) {
                     jjtree.closeNodeScope(jjtn000, true);
                   }
                 }
 /*@egen*/ 
-}
+}	
 
 void MultOp()         : {/*@bgen(jjtree) MultOp */
   ASTMultOp jjtn000 = new ASTMultOp(JJTMULTOP);
@@ -600,17 +654,17 @@ void MultOp()         : {/*@bgen(jjtree) MultOp */
                 try {
 /*@egen*/
 		<MULT_SIGN>/*@bgen(jjtree)*/
-                            {
-                              jjtree.closeNodeScope(jjtn000, true);
-                              jjtc000 = false;
-                            }
-/*@egen*/ { jjtn000.value = token;} 
-	| <DIV_SIGN>/*@bgen(jjtree)*/
-                     {
-                       jjtree.closeNodeScope(jjtn000, true);
-                       jjtc000 = false;
-                     }
-/*@egen*/ { jjtn000.value = token;}/*@bgen(jjtree)*/
+                                {
+                                  jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+                                }
+/*@egen*/ 	{ jjtn000.value = token;} 
+	| 	<DIV_SIGN>/*@bgen(jjtree)*/
+                                        {
+                                          jjtree.closeNodeScope(jjtn000, true);
+                                          jjtc000 = false;
+                                        }
+/*@egen*/ 		{ jjtn000.value = token;}/*@bgen(jjtree)*/
                 } finally {
                   if (jjtc000) {
                     jjtree.closeNodeScope(jjtn000, true);
@@ -624,8 +678,8 @@ void Fragment() : {}
 		Indentifier() //[ Args_list() ] -- removed as reults in mult node for function calls
 	|	Bool()	
 	|	Number()
-	| Real()
-	| <LEFT_BRACKET> Expression() <RIGHT_BRACKET>
+	| 	Real()
+	| 	<LEFT_BRACKET> Expression() <RIGHT_BRACKET>
 }
 
 void BoolOpp()          : {/*@bgen(jjtree) BoolOpp */
@@ -638,53 +692,53 @@ void BoolOpp()          : {/*@bgen(jjtree) BoolOpp */
 /*@egen*/
 	(
 			<EQUALS_SIGN>/*@bgen(jjtree)*/
-                                      {
-                                        jjtree.closeNodeScope(jjtn000, true);
-                                        jjtc000 = false;
-                                      }
-/*@egen*/ { jjtn000.value = token;} 
-		| <NOT_EQUALS_SIGN>/*@bgen(jjtree)*/
-                                    {
-                                      jjtree.closeNodeScope(jjtn000, true);
-                                      jjtc000 = false;
-                                    }
-/*@egen*/ { jjtn000.value = token;} 
-		| <LESS_THAN>/*@bgen(jjtree)*/
-                              {
-                                jjtree.closeNodeScope(jjtn000, true);
-                                jjtc000 = false;
-                              }
-/*@egen*/ { jjtn000.value = token;} 
-		| <GREATER_THAN>/*@bgen(jjtree)*/
-                                 {
-                                   jjtree.closeNodeScope(jjtn000, true);
-                                   jjtc000 = false;
-                                 }
-/*@egen*/ { jjtn000.value = token;} 
-		| <GREATER_THAN_EQUALS>/*@bgen(jjtree)*/
-                                        {
-                                          jjtree.closeNodeScope(jjtn000, true);
-                                          jjtc000 = false;
-                                        }
-/*@egen*/ { jjtn000.value = token;} 
-		| <LESS_THAT_EQUALS>/*@bgen(jjtree)*/
-                                     {
-                                       jjtree.closeNodeScope(jjtn000, true);
-                                       jjtc000 = false;
-                                     }
-/*@egen*/ { jjtn000.value = token;} 
-		| <AND>/*@bgen(jjtree)*/
-                        {
-                          jjtree.closeNodeScope(jjtn000, true);
-                          jjtc000 = false;
-                        }
-/*@egen*/ { jjtn000.value = token;} 
-		| <OR>/*@bgen(jjtree)*/
-                       {
-                         jjtree.closeNodeScope(jjtn000, true);
-                         jjtc000 = false;
-                       }
-/*@egen*/ { jjtn000.value = token;} 
+                                                        {
+                                                          jjtree.closeNodeScope(jjtn000, true);
+                                                          jjtc000 = false;
+                                                        }
+/*@egen*/ 			{ jjtn000.value = token;} 
+		| 	<NOT_EQUALS_SIGN>/*@bgen(jjtree)*/
+                                                        {
+                                                          jjtree.closeNodeScope(jjtn000, true);
+                                                          jjtc000 = false;
+                                                        }
+/*@egen*/ 		{ jjtn000.value = token;} 
+		| 	<LESS_THAN>/*@bgen(jjtree)*/
+                                                        {
+                                                          jjtree.closeNodeScope(jjtn000, true);
+                                                          jjtc000 = false;
+                                                        }
+/*@egen*/ 			{ jjtn000.value = token;} 
+		| 	<GREATER_THAN>/*@bgen(jjtree)*/
+                                                        {
+                                                          jjtree.closeNodeScope(jjtn000, true);
+                                                          jjtc000 = false;
+                                                        }
+/*@egen*/ 			{ jjtn000.value = token;} 
+		| 	<GREATER_THAN_EQUALS>/*@bgen(jjtree)*/
+                                                {
+                                                  jjtree.closeNodeScope(jjtn000, true);
+                                                  jjtc000 = false;
+                                                }
+/*@egen*/ 	{ jjtn000.value = token;} 
+		| 	<LESS_THAT_EQUALS>/*@bgen(jjtree)*/
+                                                        {
+                                                          jjtree.closeNodeScope(jjtn000, true);
+                                                          jjtc000 = false;
+                                                        }
+/*@egen*/ 		{ jjtn000.value = token;} 
+		| 	<AND>/*@bgen(jjtree)*/
+                                                                {
+                                                                  jjtree.closeNodeScope(jjtn000, true);
+                                                                  jjtc000 = false;
+                                                                }
+/*@egen*/ 					{ jjtn000.value = token;} 
+		| 	<OR>/*@bgen(jjtree)*/
+                                                                {
+                                                                  jjtree.closeNodeScope(jjtn000, true);
+                                                                  jjtc000 = false;
+                                                                }
+/*@egen*/ 					{ jjtn000.value = token;} 
 	)/*@bgen(jjtree)*/
         } finally {
           if (jjtc000) {
@@ -694,40 +748,39 @@ void BoolOpp()          : {/*@bgen(jjtree) BoolOpp */
 /*@egen*/	
 }
 
-
-void Condition() : {}
-{
+//TODO: Fix the hack with the optional brackets....
+void Condition()                : {/*@bgen(jjtree) #Condition(> 0) */
+  ASTCondition jjtn000 = new ASTCondition(JJTCONDITION);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) #Condition(> 0) */
+                try {
+/*@egen*/
 		<NOT> Condition()
-	|/*@bgen(jjtree) #Condition(> 0) */
-          {
-            ASTCondition jjtn001 = new ASTCondition(JJTCONDITION);
-            boolean jjtc001 = true;
-            jjtree.openNodeScope(jjtn001);
-          }
-          try {
-/*@egen*/ (
-		 [<LEFT_BRACKET>] Expression() ( ( BoolOpp() ) Expression()  [<RIGHT_BRACKET>] ) *
+	| 	(
+			[<LEFT_BRACKET>] Expression() ( ( BoolOpp() ) Expression()  [<RIGHT_BRACKET>] ) *
 		)/*@bgen(jjtree)*/
-          } catch (Throwable jjte001) {
-            if (jjtc001) {
-              jjtree.clearNodeScope(jjtn001);
-              jjtc001 = false;
-            } else {
-              jjtree.popNode();
-            }
-            if (jjte001 instanceof RuntimeException) {
-              throw (RuntimeException)jjte001;
-            }
-            if (jjte001 instanceof ParseException) {
-              throw (ParseException)jjte001;
-            }
-            throw (Error)jjte001;
-          } finally {
-            if (jjtc001) {
-              jjtree.closeNodeScope(jjtn001, jjtree.nodeArity() > 0);
-            }
-          }
-/*@egen*/               
+                } catch (Throwable jjte000) {
+                  if (jjtc000) {
+                    jjtree.clearNodeScope(jjtn000);
+                    jjtc000 = false;
+                  } else {
+                    jjtree.popNode();
+                  }
+                  if (jjte000 instanceof RuntimeException) {
+                    throw (RuntimeException)jjte000;
+                  }
+                  if (jjte000 instanceof ParseException) {
+                    throw (ParseException)jjte000;
+                  }
+                  throw (Error)jjte000;
+                } finally {
+                  if (jjtc000) {
+                    jjtree.closeNodeScope(jjtn000, jjtree.nodeArity() > 0);
+                  }
+                }
+/*@egen*/
 }
 
 void Ident_list()             : {/*@bgen(jjtree) Ident_list */
@@ -823,14 +876,11 @@ void Number()      : {/*@bgen(jjtree) Num */
         try {
 /*@egen*/
 	<NUM>/*@bgen(jjtree)*/
-        {
-          jjtree.closeNodeScope(jjtn000, true);
-          jjtc000 = false;
-        }
-/*@egen*/
-	{
-		 jjtn000.value = token; 
-	}/*@bgen(jjtree)*/
+              {
+                jjtree.closeNodeScope(jjtn000, true);
+                jjtc000 = false;
+              }
+/*@egen*/ { jjtn000.value = token; }/*@bgen(jjtree)*/
         } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
@@ -845,25 +895,25 @@ void Bool()       : {/*@bgen(jjtree) Bool */
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
 {/*@bgen(jjtree) Bool */
-        try {
+                try {
 /*@egen*/
-	<TRUE>/*@bgen(jjtree)*/
-              {
-                jjtree.closeNodeScope(jjtn000, true);
-                jjtc000 = false;
-              }
-/*@egen*/{ jjtn000.value = token;} 
-	| <FALSE>/*@bgen(jjtree)*/
-                  {
-                    jjtree.closeNodeScope(jjtn000, true);
-                    jjtc000 = false;
-                  }
+		<TRUE>/*@bgen(jjtree)*/
+                        {
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+                        }
+/*@egen*/	{ jjtn000.value = token;} 
+	| 	<FALSE>/*@bgen(jjtree)*/
+                        {
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+                        }
 /*@egen*/ { jjtn000.value = token;}/*@bgen(jjtree)*/
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
+                } finally {
+                  if (jjtc000) {
+                    jjtree.closeNodeScope(jjtn000, true);
+                  }
+                }
 /*@egen*/ 
 }
 

@@ -274,4 +274,7 @@ public class ThreeAddressVisitor implements BasicLVisitor
     addrCode.put(label,temp);
   	return null;
   }
+  public Object visit(ASTWhile node, Object data){return null;}
+
+  public Object visit(ASTIf node, Object data) {return null;}
 }

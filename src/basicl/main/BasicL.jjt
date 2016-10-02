@@ -43,9 +43,9 @@ public class BasicL
     System.out.println("Abstract Syntax Tree:");
 
     root.dump(" ");
-    System.out.println("\n\n------Symantic Analysis------\n");
-    STVisitor stv = new STVisitor();
-    root.jjtAccept(stv,null);
+    //System.out.println("\n\n------Symantic Analysis------\n");
+    //STVisitor stv = new STVisitor();
+    //root.jjtAccept(stv,null);
 	}
 }
 
@@ -96,18 +96,18 @@ TOKEN : /* Keywords */
 	|	<FALSE : "false">
 	|	<IF : "if">
 	|	<INT : "int">
-	| <DOUBLE: "double">
-	| <MAIN : "main">
+	| 	<DOUBLE: "double">
+	| 	<MAIN : "main">
 	|	<NOT : "not">
-	| <OR : "or">
+	| 	<OR : "or">
 	|	<RETURN : "return">
-	| <THEN : "then">
+	| 	<THEN : "then">
 	|	<TRUE : "true">
-	| <VAR : "var">
-	| <VOID : "void">
-	| <WHILE : "while">
+	| 	<VAR : "var">
+	| 	<VOID : "void">
+	| 	<WHILE : "while">
 	|	<BEGIN : "begin">
-	| <END : "end">
+	| 	<END : "end">
 }
 
  TOKEN : /* Identifiers */
@@ -130,11 +130,11 @@ TOKEN : /* Operators and Relations */
 	|	<MULT_SIGN : "*">
 	|	<DIV_SIGN : "/">
 	|	<EQUALS_SIGN : "=">
-	| <NOT_EQUALS_SIGN : "!=">
+	| 	<NOT_EQUALS_SIGN : "!=">
 	|	<LESS_THAN : "<">
-	| <GREATER_THAN : ">">
+	| 	<GREATER_THAN : ">">
 	|	<LESS_THAT_EQUALS : "<=">
-	| <GREATER_THAN_EQUALS : ">=">
+	| 	<GREATER_THAN_EQUALS : ">=">
 	|	<LEFT_BRACKET : "(">
 	|	<RIGHT_BRACKET : ")">
 	|	<COMMA : ",">
@@ -165,7 +165,7 @@ void Decl() : {}
 	(
 	 	Var_decl() 
 	) 
-	| (
+	| 	(
 			Const_decl()
 		)
 }
@@ -205,10 +205,10 @@ void Param_list() : {}
 
 void Type() #Type : {}
 {
-	<INT>  { jjtThis.value = token;} 
-	| <DOUBLE> { jjtThis.value = token;} 
-	| <BOOL> { jjtThis.value = token;} 
-	|	<VOID> { jjtThis.value = token;} 
+		<INT>  		{ jjtThis.value = token;} 
+	| 	<DOUBLE> 	{ jjtThis.value = token;} 
+	| 	<BOOL> 		{ jjtThis.value = token;} 
+	|	<VOID> 		{ jjtThis.value = token;} 
 }
 
 void Main_Prog() #Main : {}
@@ -228,10 +228,10 @@ void Statment() : {}
 	|	<BEGIN> ( Statment() <SEMICOLON> )* <END>
 	|	(
 			<IF> Condition() <THEN> Statment() <SEMICOLON> <ELSE> Statment()
-		)    
+		) #If(>0)  
 	|	(
 			<WHILE> Condition() <DO> Statment()
-		) 	
+		) #While(>0)	
 	| {} // this will allow you to just stick aload of semicolons in the file and will parse correctly !!!
 }
 
@@ -260,14 +260,14 @@ void MultExpression() : {}
 
 void AddOp() #AddOp : {}
 {
-		<PLUS_SIGN> { jjtThis.value = token;} 
-	| <MINUS_SIGN> { jjtThis.value = token;} 
-}
+		<PLUS_SIGN> 	{ jjtThis.value = token;} 
+	| 	<MINUS_SIGN> 	{ jjtThis.value = token;} 
+}	
 
 void MultOp() #MultOp : {}
 {
-		<MULT_SIGN> { jjtThis.value = token;} 
-	| <DIV_SIGN> { jjtThis.value = token;} 
+		<MULT_SIGN> 	{ jjtThis.value = token;} 
+	| 	<DIV_SIGN> 		{ jjtThis.value = token;} 
 }
 
 void Fragment() : {}
@@ -275,31 +275,31 @@ void Fragment() : {}
 		Indentifier() //[ Args_list() ] -- removed as reults in mult node for function calls
 	|	Bool()	
 	|	Number()
-	| Real()
-	| <LEFT_BRACKET> Expression() <RIGHT_BRACKET>
+	| 	Real()
+	| 	<LEFT_BRACKET> Expression() <RIGHT_BRACKET>
 }
 
 void BoolOpp() #BoolOpp : {}
 {
 	(
-			<EQUALS_SIGN> { jjtThis.value = token;} 
-		| <NOT_EQUALS_SIGN> { jjtThis.value = token;} 
-		| <LESS_THAN> { jjtThis.value = token;} 
-		| <GREATER_THAN> { jjtThis.value = token;} 
-		| <GREATER_THAN_EQUALS> { jjtThis.value = token;} 
-		| <LESS_THAT_EQUALS> { jjtThis.value = token;} 
-		| <AND> { jjtThis.value = token;} 
-		| <OR> { jjtThis.value = token;} 
+			<EQUALS_SIGN> 			{ jjtThis.value = token;} 
+		| 	<NOT_EQUALS_SIGN> 		{ jjtThis.value = token;} 
+		| 	<LESS_THAN> 			{ jjtThis.value = token;} 
+		| 	<GREATER_THAN> 			{ jjtThis.value = token;} 
+		| 	<GREATER_THAN_EQUALS> 	{ jjtThis.value = token;} 
+		| 	<LESS_THAT_EQUALS> 		{ jjtThis.value = token;} 
+		| 	<AND> 					{ jjtThis.value = token;} 
+		| 	<OR> 					{ jjtThis.value = token;} 
 	)	
 }
 
-
-void Condition() : {}
+//TODO: Fix the hack with the optional brackets....
+void Condition() #Condition(>0) : {}
 {
 		<NOT> Condition()
-	| (
-		 [<LEFT_BRACKET>] Expression() ( ( BoolOpp() ) Expression()  [<RIGHT_BRACKET>] ) *
-		) #Condition(>0)
+	| 	(
+			[<LEFT_BRACKET>] Expression() ( ( BoolOpp() ) Expression()  [<RIGHT_BRACKET>] ) *
+		)
 }
 
 void Ident_list() #Ident_list : {}
@@ -319,16 +319,13 @@ void Indentifier() #Id : { Token t; }
 
 void Number() #Num : { Token t; }
 {
-	<NUM>
-	{
-		 jjtThis.value = token; 
-	}
+	<NUM> { jjtThis.value = token; }
 }
 
 void Bool() #Bool : {}
 {
-	<TRUE>{ jjtThis.value = token;} 
-	| <FALSE> { jjtThis.value = token;} 
+		<TRUE>	{ jjtThis.value = token;} 
+	| 	<FALSE> { jjtThis.value = token;} 
 }
 
 void Real() #Real : { Token t;}

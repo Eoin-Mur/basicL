@@ -553,4 +553,8 @@ public class STVisitor implements BasicLVisitor
     }
     return al;
   }
+
+  public Object visit(ASTWhile node, Object data){return null;}
+
+  public Object visit(ASTIf node, Object data) {return null;}
 }
