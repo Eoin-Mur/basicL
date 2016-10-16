@@ -2,3 +2,5 @@
 /bin/
 /src/basicl/jjt/*.java
 /src/basicl/jjt/*.jj
+.project
+.classpath
