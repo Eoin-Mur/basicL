@@ -1,4 +1,4 @@
 /build/*
 /bin/
-/src/basicl/*.java
-/src/basicl/*.jj
+/src/basicl/jjt/*.java
+/src/basicl/jjt/*.jj
