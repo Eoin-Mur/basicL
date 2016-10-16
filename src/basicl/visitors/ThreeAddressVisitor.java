@@ -1,7 +1,8 @@
 package basicl.visitors ;
 
 import java.util.*;
-import basicl.main.* ;
+
+import basicl.jjt.*;
 import basicl.model.Quadruple ;
 
 

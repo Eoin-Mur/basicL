@@ -1,39 +1,24 @@
 package basicl.model ;
 
 import java.util.HashMap;
-import basicl.main.* ;
+
+import basicl.jjt.*;
 /**
 	container describing a symbol table entry
 	Eoin Murphy
 */
-public class STC extends Object
+public class SymbolAttributes extends Object
 {
-	private Token name;
 	private Token type;
 	private DataType datatype; 
-	private String scope;
+	
 	private HashMap<String,Object> values;
 
-	public STC(Token _name, Token _type, String _scope,DataType _dataType)
+	public SymbolAttributes(Token _type, DataType _dataType)
 	{
-		name = _name;
-		type = _type;
-		scope = _scope;
-		datatype = _dataType;
-		values = new HashMap<String,Object>();
-	}
-
-	public STC(Token _name, Token _type,DataType _dataType)
-	{
-		name = _name;
 		type = _type;
 		datatype = _dataType;
 		values = new HashMap<String,Object>();
-	}
-
-	public void setScope(String _scope)
-	{
-		scope = _scope; 
 	}
 
 	public void addValue(String name, Object value)
@@ -46,11 +31,6 @@ public class STC extends Object
 		return values.get(name);
 	}
 
-	public Token getName()
-	{
-		return name ;
-	}
-
 	public Token getType()
 	{
 		return type ;
@@ -59,11 +39,6 @@ public class STC extends Object
 	public DataType getDataType()
 	{
 		return datatype ;
-	}
-
-	public String getScope()
-	{
-		return scope ;
 	}
 
 	public HashMap getValues()

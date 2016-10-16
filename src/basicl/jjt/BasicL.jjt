@@ -15,12 +15,12 @@ options {
 
 PARSER_BEGIN(BasicL)
 
-package basicl.main ;
+package basicl.jjt ;
 
 import java.io.*;
 import java.util.*;
 
-import basicl.visitors.STVisitor ;
+
 public class BasicL
 {
 	public static Hashtable ST = new Hashtable();
@@ -70,20 +70,20 @@ SKIP : /* COMMENTS */
 <IN_COMMENT> SKIP :
 {
 		"/*" { commentNesting++; }
-	| "*/" { commentNesting--;
+	| 	"*/" { commentNesting--;
 			if (commentNesting == 0)
 				SwitchTo(DEFAULT);
 			}
-	| <~[]>
+	| 	<~[]>
 }
 
 SKIP : /*** Ignoring spaces/tabs/newlines ***/
 {
 		" "
-	| "\t"
-	| "\n"
-	| "\r"
-	| "\f"
+	| 	"\t"
+	| 	"\n"
+	| 	"\r"
+	| 	"\f"
 }
 
 TOKEN : /* Keywords */ 
@@ -240,8 +240,9 @@ void Statment() : {}
 void Expression() : {}
 {
 	LOOKAHEAD(2)
-	FunctionCall()
-	| AddExpression()
+	
+		FunctionCall()
+	| 	AddExpression()
 }
 
 void AddExpression() : {}
